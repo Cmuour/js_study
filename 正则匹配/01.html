@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<script>
+		
+		// 那个字母出现的次数最多
+		let str = "Youarenevertoosmalltomakeadifference";
+		let obj = {}
+		let maxNum = 0;
+		let ary = [];
+		let result = str.replace(/[a-z]/gi,function(){
+			let key = arguments[0];
+			obj[key] >= 1? obj[key] += 1: obj[key] = 1;
+			// for (let key in obj) {
+			// 	obj[key] > maxNum? maxNum = obj[key]: null;
+			// }
+			// for (let key in obj) {
+			// 	obj[key] === maxNum? ary.push(key) : null;
+			// }
+			// console.log(arguments)
+		})
+		
+		
+		// console.log(ary,maxNum)
+
+
+	</script>
+
+</body>
+</html>

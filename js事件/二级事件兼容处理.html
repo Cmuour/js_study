@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		#mour{
+			width: 200px;
+			height: 200px;
+			background: red;
+			margin: 20px auto;
+		}
+	</style>
+</head>
+<body>
+
+<div id="mour"></div>
+
+<script type="text/javascript" src="./event.js"></script>
+<script type="text/javascript">
+	
+	var oMour = document.getElementById('mour');
+
+	function fn1(){
+		console.log(this === oMour);
+	}
+
+	bind(oMour,"click",fn1);
+	bind(oMour,"click",fn1);
+	
+</script>
+
+</body>
+</html>

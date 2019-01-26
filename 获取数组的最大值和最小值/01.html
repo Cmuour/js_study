@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<script>
+		
+		let ary = [12,52,37,61,24,8,32,19,4,85,17,63,48];
+
+		// 第一种实现方法
+		/*
+			ary.sort((a,b)=>{
+				return a-b;
+			})
+			let max = ary[0];
+			let min = ary[ary.length - 1];
+			console.log(max,min);
+		*/
+
+
+		// 第二种实现方法
+		/*
+		let max = ary[0],min = ary[0];
+		for (let i = 0; i < ary.length; i++) {
+			let cur = ary[i];
+			max < cur? max = cur : null;
+			min > cur? min = cur : null;
+		}
+		console.log(max,min);
+		*/
+
+		// 第三种实现方法
+		/*
+		let max = eval("Math.max("+ ary.toString() +")");
+		let min = eval("Math.min("+ ary.toString() +")");
+		console.log(max,min);
+		*/
+
+		// 第四种实现方法
+		let max = Math.max.apply(null,ary);
+		let min = Math.min.apply(null,ary);
+		console.log(max,min);
+
+	</script>
+
+</body>
+</html>

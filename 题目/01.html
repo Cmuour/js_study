@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<script>
+		
+		var num = 20;
+		var obj = {
+			num: 30,
+			fn: (function(num){
+				this.num *= 3;
+				num += 15;
+				var num = 45;
+				return function () {
+					this.num *= 4;
+					num += 20;
+					console.log(num)
+				}
+			})(40)
+		}
+
+		let fn = obj.fn;
+		fn();	// 65
+		obj.fn();	// 
+		console.log(num,obj.num);	// 140  270
+
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>原生js实现轮播图效果~懒加载</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		ul,li{
+			list-style: none;
+		}
+		#wrap_slide{
+			width: 660px;
+			height: 320px;
+			margin: 10px auto;
+			overflow: hidden;
+			position: relative;
+		}
+		.img_slide{
+			position: absolute;
+			width: 660px;
+			height: 320px;
+			left: 0;
+			top: 0;
+		}
+		.img_slide div{
+			float: left;
+			width: 660px;
+			height: 320px;
+			background: url(./images/slide_4.jpg) no-repeat;
+		}
+		.img_slide img{
+			width: 660px;
+			height: 100%;
+			display: none;
+			opacity: 0;
+			filter: alpha(opacity=0);
+			transition: all 2s;
+		}
+		.lis_item{
+			position: absolute;
+			width: 20px;
+			height: 20px;
+			right: 16px;
+			bottom: 12px;
+		}
+		.lis_item li{
+			display: block;
+			float: left;
+			width: 12px;
+			height: 12px;
+			background: #e1e1e1;
+			margin-right: 8px;
+			border-radius: 50%;
+			cursor: pointer;
+		}
+		.lis_item li.bg{
+			background: lightblue;
+		}
+		.placeholder{
+			width: 100%;
+			height: 100%;
+			background: url(./images/slide_4.jpg) no-repeat;
+		}
+		.slide_pic{
+			position: absolute;
+			display: block;
+			width: 30px;
+			height: 50px;
+			background: rgba(0,0,0,.5);
+			top: 135px;
+			opacity: 0;
+			transition: all .5s;
+		}
+		.prev{
+			left: 10px;
+		}
+		.prev::after{
+			content: "";
+			display: block;
+			width: 20px;
+			height: 20px;
+			border-top: 3px solid #e1e1e1;
+			border-left: 3px solid #e1e1e1;
+			transform: rotate(-45deg);
+			margin-top: 14px;
+			margin-left: 10px;
+		}
+		.next{
+			right: 10px;
+		}
+		.next::after{
+			content: "";
+			display: block;
+			width: 20px;
+			height: 20px;
+			border-top: 3px solid #e1e1e1;
+			border-right: 3px solid #e1e1e1;
+			transform: rotate(45deg);
+			margin-top: 14px;
+			margin-left: -2px;
+		}
+		#wrap_slide:hover .slide_pic{
+			opacity: 1;
+		}	
+	</style>
+</head>
+<body>
+
+<div id="wrap_slide">
+	<div class="img_slide"></div>
+	<ul class="lis_item"></ul>
+	<a href="javascript:;" class="slide_pic prev"></a>
+	<a href="javascript:;" class="slide_pic next"></a>
+</div>
+
+
+<script type="text/javascript" src="./mymethods.js"></script>
+<script type="text/javascript" src="./slide.js"></script>
+<script type="text/javascript">
+
+~function(){
+	// 获取元素
+	let oWrapSlide = document.getElementById('wrap_slide'),
+		oImgSlide = mytools.firstChild(oWrapSlide);
+		aImg = oImgSlide.getElementsByTagName('img'),
+		oUl = mytools.children(oWrapSlide,"ul")[0],
+		aLisItem = oUl.getElementsByTagName('li'),
+		oPrev = mytools.children(oWrapSlide,"a")[0],
+		oNext = mytools.children(oWrapSlide,"a")[1];
+
+
+	let omour = new oMourSlide(oWrapSlide,{
+		url:"http://localhost/api/getlunbotu",
+		time:2000
+	})
+	console.dir(omour);
+
+
+
+
+// 	// 定义变量 data->接收从后台接收到的数据 picCount->计算轮播图总图片 str->拼接标签
+// 	let data = null, picCount = null, str = "", liStr = "";
+	
+// 	// 使用ajax请求获取数据
+// 	let xhr = new XMLHttpRequest;
+// 	//	请求地址 http://localhost/api/getlunbotu  false->使用异步编程
+// 	xhr.open("get","http://localhost/api/getlunbotu",false);
+// 	xhr.onreadystatechange = function(){
+// 		if ( xhr.readyState === 4 && /^2\d{2}$/.test(xhr.status) ) {
+// 			let val = xhr.responseText;
+// 			data = JSON.parse(val).data; //吧获取到的数据 存储到 data这个变量
+// 		}
+// 	}
+// 	xhr.send(null);
+
+// 	// 判断是否拿到数据 如果拿到数据 使用字符串拼接 把要加到html里的标签 拼接起来
+// 	if (data) {
+// 		let str = "",liStr = "";
+
+// 		for (let i = 0, len = data.length; i < len; i++) {
+// 			str += "<div><img src='#' trueImg=http://localhost/"+ data[i]["pic"] +" /></div>";
+// 			i === 0? (liStr += "<li class='bg'></li>") : (liStr += "<li></li>")
+// 		}
+// 		str += "<div><img src='#' trueImg=http://localhost/"+ data[0]["pic"] +" /></div>"
+// 	}
+
+
+// 	oImgSlide.innerHTML = str;
+// 	oUl.innerHTML = liStr;
+// 	picCount = data.length + 1;
+// 	mytools.css(oImgSlide,"width", picCount * 660); // 动态计算 oImgSlide 元素的总宽度
+// 	mytools.css(oUl,"width",data.length * 20);// 动态计算 oUl 元素的总宽度
+
+// 	// 使用懒加载
+// 	function lazyImg(){
+// 		for (let i = 0, len = aImg.length; i < len; i++) {
+// 			let newImg = new Image;
+// 			newImg.src = aImg[i].getAttribute("trueImg");
+// 			newImg.onload = function(){
+// 				aImg[i].src = this.src;
+// 				mytools.css(aImg[i],{opacity:1,display:"block"});
+// 				newImg = null;
+// 			}
+// 		}
+// 	}
+// 	let timer = setTimeout(lazyImg,500);
+
+
+
+
+// 	let step = 0, interval = 3000;
+// 	let autoTimer = setInterval(autoMove,interval);
+// 	function autoMove(){
+// 		if (step >= picCount-1) {
+// 			step = 0;
+// 			mytools.css(oImgSlide,"left",0)
+// 		}
+// 		step++;
+// 		mytools.animation(oImgSlide,{left:-step*660},600);
+// 		changeTip();
+// 	}
+
+// 	function changeTip(){
+// 		let tempStep = step >= aLisItem.length? 0: step;
+// 		for (let i = 0, len = aLisItem.length; i < len; i++) {
+// 			i === tempStep? mytools.addClass(aLisItem[i],"bg") : mytools.removeClass(aLisItem[i],"bg")
+// 		}
+// 	}
+
+// 	oImgSlide.onmouseover = function(){
+// 		clearInterval(autoTimer);
+// 	}
+
+// 	oImgSlide.onmouseout = function(){
+// 		autoTimer = setInterval(autoMove,interval);
+// 	}
+
+// 	~function(){
+// 		for (let i = 0, len = aLisItem.length; i < len; i++) {
+// 			aLisItem[i].index = i;
+// 			aLisItem[i].onclick = function(){
+// 				clearInterval(autoTimer);
+// 				step = this.index;
+// 				changeTip();
+// 				mytools.animation(oImgSlide,{left:-step*660},600);
+// 				setTimeout(autoTimer,500);
+// 			}
+// 		}
+// 	}()
+
+// 	oNext.onclick = function(){
+// 		clearInterval(autoTimer)
+// 		autoMove()
+// 		setTimeout(autoTimer,500);
+// 	}
+// 	oPrev.onclick = function() {
+// 		clearInterval(autoTimer)
+// 		if( step <= 0) {
+// 			step = picCount - 1;
+// 			mytools.css(oImgSlide,"left",-step * 660);
+// 		}
+// 		step--;
+// 		changeTip();
+// 		mytools.animation(oImgSlide,{ left: -step * 660 },600);
+// 		setTimeout(autoTimer,500);
+// 	}
+
+}()
+
+
+</script>
+
+</body>
+</html>

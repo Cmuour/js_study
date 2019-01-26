@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<script>
+
+		// function avgFn() {
+		// 	let ary = [];
+		// 	for(let i = 0; i < arguments.length; i++) {
+		// 		ary[ary.length] = arguments[i];
+		// 	}
+
+		// 	ary.sort((a,b)=>{ return a-b; });
+		// 	ary.shift();
+		// 	ary.pop();
+		// 	return (eval(ary.join("+"))/ary.length).toFixed(2);
+		// }
+
+		// let result = avgFn(9.5,9.7,3.0,9.2,10,9.8,9.1);
+		// console.log(result);
+
+
+		// 第二种方式实现
+		function avgFn() {
+			let ary = [].slice.call(arguments);
+
+			ary.sort((a,b)=>{ return a-b; });
+			ary.shift();
+			ary.pop();
+			return (eval(ary.join("+"))/ary.length).toFixed(2);
+		}
+
+		let result = avgFn(9.5,9.7,3.0,9.2,10,9.8,9.1);
+		console.log(result);
+
+
+		// 第三种方法实现
+		// function avgFn() {
+		// 	[].sort.call(arguments,(a,b)=>{ return a-b; });
+		// 	[].shift.call(arguments);
+		// 	[].pop.call(arguments);
+		// 	return (eval([].join.call(arguments,"+"))/arguments.length).toFixed(2);
+		// }
+
+		// let result = avgFn(9.5,9.7,3.0,9.2,10,9.8,9.1);
+		// console.log(result)
+
+	</script>
+
+</body>
+</html>

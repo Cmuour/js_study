@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		
+		let p = {
+			name: '张三',
+			age:19,
+			gender:'男',
+			copy:function(){
+				let temp = {};
+				for (let k in this){
+					temp[k] = this[k]
+				}
+				return temp;
+			}
+		}
+
+		let p2 = p.copy();
+
+		p.name = '李四';
+		p.age = 21;
+		p.gender = '女';
+
+	</script>
+</body>
+</html>

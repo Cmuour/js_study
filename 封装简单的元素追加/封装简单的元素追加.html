@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="addElement.js"></script>
+</head>
+<body>
+
+	<script type="text/javascript">
+		
+		function divTag(el){
+			this.el = document.createElement(el);
+		}
+
+		divTag.prototype.css = function(json){
+			for(let k in json){
+				this.el.style[k] = json[k];
+			}
+			return this;
+		}
+
+		divTag.prototype.dom = function(node){
+			node.appendChild(this.el)
+			return this;
+		}
+
+
+		new divTag('div').dom( document.body ).css({
+			width: '100px',
+			height: '100px',
+			backgroundColor: 'red'
+		})
+
+		new divTag('p').dom( document.body ).css({
+			width: '300px',
+			height: '100px',
+			backgroundColor: 'blue'
+		})
+
+
+	</script>
+
+</body>
+</html>

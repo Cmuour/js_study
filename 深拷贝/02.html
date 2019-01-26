@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script>
+		function deepCopy(){
+			let temp = {};
+			for(let k in this){
+				if(typeof this[k] === 'object' ){
+					temp[k] = this[k].deepCopy();
+				}else{
+					temp[k] = this[k];
+				}
+			}
+			return temp;
+		}
+
+		let car = { name:'兰博基尼' };
+		let o = { name:'李四', age: 23, car:car };
+
+		car.deepCopy = deepCopy;
+		o.deepCopy = deepCopy;
+
+		let w = o.deepCopy();
+
+		w.car.name = '玛莎拉蒂';
+
+	</script>
+</body>
+</html>

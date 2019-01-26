@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		#mour{
+			position: relative;
+			width: 400px;
+			height: 400px;
+			background: lightblue;
+			left: 100px;
+			top: 20px;
+		}
+		#mark{
+			position: absolute;
+			width: 200px;
+			height: 200px;
+			left: 0;
+			top: 0;
+			background: rgba(0,0,0,.1);
+			/*display: none;*/
+		}
+		#muouren{
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			left: 0;
+			top: 0;
+		}
+		#muouren:hover #mark{
+			cursor: move;
+		}
+	</style>
+</head>
+<body>
+
+<div id="mour">
+	<div id="mark"></div>
+	<div id="muouren"></div>
+</div>
+
+<script>
+	
+	let oMour = document.getElementById("mour");
+	let oMuouren = document.getElementById("muouren");
+	let oMark = document.getElementById("mark");
+	let minL = 0, minT = 0, maxL = oMour.offsetWidth - oMark.offsetWidth, maxT = oMour.offsetHeight - oMark.offsetHeight;
+
+	oMuouren.onmousemove = function(e){
+		e = e || window.event;
+		let left = e.clientX - oMour.offsetLeft - (oMark.offsetWidth/2);
+		let top = e.clientY - oMour.offsetTop - (oMark.offsetHeight/2);
+
+		if (left < 0) {
+			oMark.style.left = minL + "px";
+		}else if(left > maxL) {
+			oMark.style.left = maxL + "px";
+		}else{
+			oMark.style.left = left + "px";
+		}
+
+		if (top < 0) {
+			oMark.style.top = minT + "px";
+		}else if(top > maxT) {
+			oMark.style.top = maxT + "px";
+		}else{
+			oMark.style.top = top + "px";
+		}
+	}
+
+	oMuouren.onmouseenter = function(){
+		oMark.style.display = "block";
+	}
+
+	oMuouren.onmouseleave = function(){
+		oMark.style.display = "none";
+	}
+
+	
+
+</script>
+</body>
+</html>

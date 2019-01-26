@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<script>
+		
+		Array.prototype.myUnique = function() {
+			let obj = {};
+			for (let i = 0; i < this.length; i++) {
+				let cur = this[i];
+				if ( obj[cur] == cur ) {
+					this[i] = this[this.length - 1];
+					this.length--;
+					i--;
+					continue;
+				}
+				obj[cur] = cur;
+			}
+			obj = null;
+		}
+
+		let ary = [ 12, 13, 14,12,14,34,53,34];
+		ary.myUnique()
+		console.log(ary);
+
+	</script>
+
+</body>
+</html>

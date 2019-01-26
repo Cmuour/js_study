@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	var obj = {
+		fn:function fn(){
+
+		}
+	};
+	console.log({}.toString.call([]));
+
+	var obj1 = {
+		name:'mour',
+		age:21,
+		gender:'男'
+	};
+
+	console.log( obj1.hasOwnProperty('name') )
+
+	for(var key in obj1){
+		console.log(key);
+	}
+
+
+	function sum(a, b) {
+	  return a + b;
+	}
+
+	console.log({}.toString.call(sum.toString()) === "[object String]");
+
+	console.log(typeof Math.abs.toString() === 'string');
+
+
+
+	function Car(make, model, year) {
+	  this.make = make;
+	  this.model = model;
+	  this.year = year;
+	}
+	var auto = new Car('Honda', 'Accord', 1998);
+
+	console.log(auto instanceof Car);
+	// expected output: true
+
+	console.log(auto instanceof Function);
+	// expected output: false
+
+	console.log(auto instanceof Object);
+	// expected output: true
+
+	let ary = [];
+	console.log( ary instanceof Array);
+	console.log( Array instanceof Function);
+	console.log( ary instanceof Object);
+
+
+
+	function fn1(){
+		this.version = "1.0.0.1";
+	}
+
+	fn1.prototype.eat = function(){
+		console.log(this.name+'很能吃');
+	}
+
+	function fn2(name){
+		this.name = name;
+	}
+
+	fn2.prototype = new fn1();
+
+	let foo = new fn2('mour');
+
+	foo.eat();
+
+
+</script>
+</body>
+</html>

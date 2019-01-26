@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		#mour{
+			width: 100px;
+			height: 30px;
+			margin: 20px auto;
+			border: 1px solid lightblue;
+			text-align: center;
+			line-height: 30px;
+			position: relative;
+		}
+		#mark{
+			position: absolute;
+			width: 400px;
+			height: 60px;
+			left: -1px;
+			top: 30px;
+			background: pink;
+			text-align: center;
+			line-height: 60px;
+			display: none;
+		}
+	</style>
+</head>
+<body>
+
+<div id="mour">
+	<span>购物车</span>
+	<div id="mark">这里什么都没有！快去添加进来吧！！</div>
+</div>
+
+<script>
+	let oMark = document.getElementById("mark");
+	document.body.onclick = function(e){
+		e = e || window.event;
+		e.target = e.target || e.srcElement;
+		console.dir(e.target)
+		if( e.target.id === "mour" || (e.target.tagName.toLowerCase() === "span" && e.target.parentNode.id === "mour") ) {
+			if (window.getComputedStyle(oMark,null).display === "none") {
+				console.log(window.getComputedStyle(oMark,null).display)
+				oMark.style.display = "block";
+			}else{
+				oMark.style.display = "none";
+			}
+			return;
+		}
+		if(e.target.id === "mark"){
+			return;
+		}
+
+		oMark.style.display = "none";
+
+	}
+</script>
+
+</body>
+</html>

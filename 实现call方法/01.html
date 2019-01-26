@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<script>
+		
+		function xxx() {
+			console.log(1)
+		}
+		function yyy() {
+			console.log(2)
+		}
+
+		xxx.call.call(yyy);
+
+/*
+		Function.prototype.call = function () {
+			this -> xxx.__proto__.call
+			xxx.__proto__.call 里的this = yyy
+			this();
+		}
+*/
+	</script>
+
+</body>
+</html>

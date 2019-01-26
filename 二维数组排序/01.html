@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<script>
+	
+	let ary = [
+		{ name:'叶展豪', age: 21 },
+		{ name:'陈金洋', age: 19 },
+		{ name:'李永康', age: 60 },
+		{ name:'廖家城', age: 40 }		
+	]
+
+	// ary.sort((a,b)=>{
+	// 	return a.age - b.age;
+	// })
+
+	ary.sort( (a,b)=>{
+		return a.name.localeCompare(b.name);
+	})
+
+	console.log(ary);
+
+</script>
+
+</body>
+</html>

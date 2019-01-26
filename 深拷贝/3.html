@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script>
+		let o = { name:'zhangsan', age: 21, gender: '男' };
+
+		o.copy = function(o){
+			for (let k in this){
+				o[k] = this[k]
+			}
+		}
+
+		let p1 = {};
+		o.copy(p1)
+
+		console.log(p1)
+
+	</script>
+</body>
+</html>

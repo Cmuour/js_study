@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			font-size: 14px;
+		}
+		#wrap_tab{
+			width: 400px;
+			padding: 20px;
+			border: 1px solid green;
+			margin: 20px auto;
+			border-radius: 8px;
+			box-shadow: 1px 1px 5px green;
+		}
+		#wrap_tab .tab{
+			width: 400px;
+		}
+		#wrap_tab .tab thead tr{
+			height: 35px;
+			background: green;
+			color: white;
+		}
+		#wrap_tab .tab thead tr th{
+			width: 100px;
+			text-align: center;
+		}
+		#wrap_tab .tab thead tr th.cursor{
+			cursor: pointer;
+		}
+		#wrap_tab .tab tbody tr{
+			height: 30px;
+		}
+		#wrap_tab .tab tbody tr.bg{
+			background: lightgreen;
+		}
+		#wrap_tab .tab tbody tr td{
+			width: 100px;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<div id="wrap_tab">
+		<table class="tab" cellpadding="0" cellspacing="0">
+			<thead>
+				<tr>
+					<th class="cursor">姓名</th>
+					<th class="cursor">年龄</th>
+					<th class="cursor">武力值</th>
+					<th>性别</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- <tr>
+					<td>令狐冲</td>
+					<td>21</td>
+					<td>99</td>
+					<td>男</td>
+				</tr>
+				<tr class="bg">
+					<td>令狐冲</td>
+					<td>21</td>
+					<td>99</td>
+					<td>男</td>
+				</tr> -->
+			</tbody>
+		</table>
+	</div>
+
+	<script>
+		
+		let oTab = document.querySelector('.tab');
+		let aCursor = document.querySelectorAll('.cursor');
+		let oHead = oTab.tHead;
+		let oThs = oHead.rows[0].cells;
+		let oBody = oTab.tBodies[0];
+		let oTrs = oBody.rows;
+		let data = null;
+
+		let xhr = new XMLHttpRequest;
+		xhr.open("get", "http://localhost/api/getTabData", false);
+		xhr.onreadystatechange = function() {
+			if ( xhr.readyState === 4 && /^2\d{2}$/.test(xhr.status) ) {
+				var val = xhr.responseText;
+				data = JSON.parse(val).data;
+			}
+		}
+		xhr.send(null);
+
+		function bind(){
+			let frg = document.createDocumentFragment();
+			for (let i = 0; i < data.length; i++) {
+				let cur = data[i];
+				let oTr = document.createElement('tr');
+
+				for (let key in cur) {
+					let oTd = document.createElement('td');
+					if(key === "_id"){
+					}else{
+						oTd.innerHTML = cur[key];
+						oTr.appendChild(oTd);
+					}
+				}
+				frg.appendChild(oTr);
+			}
+			oBody.appendChild(frg);
+			frg = null;
+		}
+		bind();
+
+		function changeBg() {
+			for (let i = 0; i < data.length; i++){
+				oTrs[i].style.backgroundColor = i % 2 == 1?"lightgreen":"";
+			}
+		}
+		changeBg()
+
+
+		function sort (index){
+			let _this = this;
+			let result = [].slice.call(oTrs);
+
+			for (let k = 0; k < oThs.length; k++) {
+				if (oThs[k] !== this) {
+					oThs[k].flag = -1;
+				}
+			}
+
+			_this.flag *= -1;
+			result.sort(function(a,b){
+				let curInn = a.cells[index].innerHTML,
+					nexInn = b.cells[index].innerHTML,
+					curInnNum = parseFloat(a.cells[index].innerHTML),
+					nexInnNum = parseFloat(a.cells[index].innerHTML);
+
+				if (　isNaN(curInnNum) || isNaN(nexInnNum)　) {
+					return (curInn.localeCompare(nexInn)) * _this.flag;
+				}else{
+					return (curInn - nexInn) * _this.flag;
+				}
+			})
+
+			let frg = document.createDocumentFragment();
+
+			for (let i = 0; i < result.length; i++) {
+				frg.appendChild(result[i]);
+			}
+
+			oBody.appendChild(frg);
+			changeBg();
+		}
+
+		for (let i = 0; i < oThs.length; i++) {
+			if (oThs[i].className === "cursor") {
+				oThs[i].index = i;
+				oThs[i].flag = -1;
+				oThs[i].onclick = function(){
+					sort.call(this,this.index)
+
+				}
+			}
+		}
+
+
+
+	</script>
+
+</body>
+</html>

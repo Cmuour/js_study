@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		#mour{
+			position: relative;
+			width: 100px;
+			height: 100px;
+			background: lightblue;
+			top: 0;
+			left: 0;
+			opacity: 1;
+			filter: alpha(opacity=0);
+		}
+		button{
+			margin-top: 50px;
+			margin-left: 100px;
+		}
+	</style>
+</head>
+<body>
+
+<div id="mour"></div><!-- 
+<button id="boxLeft">向左</button>
+<button id="boxRight">向右</button> -->
+
+<script type="text/javascript" src="./mymethods.js"></script>
+<script type="text/javascript">
+	
+	// let oMour = document.querySelector('#mour');
+	// let duration = 1500, interval = 10;
+	// let oMourWidth = oMour.offsetWidth,maxLeft = document.documentElement.clientWidth - oMourWidth;
+	// let step = (maxLeft / duration) * 10;
+	// console.log(maxLeft)
+	// let timer = setInterval(function(){
+	// 	let curLeft = oMour.offsetLeft;
+	// 	if (curLeft+step >= maxLeft) {
+	// 		mytools.css(oMour,"left",maxLeft);
+	// 		clearInterval(timer);
+	// 		return;
+	// 	}
+	// 	curLeft += step;
+	// 	mytools.css(oMour,"left",curLeft);
+	// },interval)
+
+
+	//递归思想
+
+	let oMour = document.querySelector('#mour');	
+		// oBoxLeft = document.querySelector('#boxLeft'),
+		// oBoxRight = document.querySelector('#boxRight');
+	// let step = 10, minLeft = 0, maxLeft = document.documentElement.clientWidth - oMour.offsetWidth;
+	// function move(val){
+	// 	_move();
+	// 	function _move(){
+	// 		clearTimeout(oMour.timer);
+	// 		let curLeft = mytools.css(oMour,"left");
+	// 		if(curLeft < val) {
+	// 			if(curLeft + step >= val) {
+	// 				mytools.css(oMour,"left",maxLeft);
+	// 				clearTimeout(oMour.timer)
+	// 				return;
+	// 			}
+	// 			curLeft += step;
+	// 			mytools.css(oMour,"left",curLeft);
+	// 		}else if(curLeft > val) {
+	// 			if(curLeft - step <= val) {
+	// 				mytools.css(oMour,"left",minLeft);
+	// 				clearTimeout(oMour.timer);
+	// 				return;
+	// 			}
+	// 			curLeft -= step;
+	// 			mytools.css(oMour,"left",curLeft);
+	// 		}else{
+	// 			return;
+	// 		}
+	// 		oMour.timer = setTimeout(_move,10)
+	// 	}
+	// }
+	// oBoxLeft.onclick = function(){
+	// 	move(minLeft);
+	// }
+	// oBoxRight.onclick = function(){
+	// 	move(maxLeft);
+	// }
+
+
+	mytools.animation(oMour,{
+		width: 100,
+		height: 200,
+		left: 400,
+		top: 300,
+		opacity: 0.5
+	},500,function(){
+		mytools.css(this,"backgroundColor","red")
+	})
+
+</script>
+
+
+</body>
+</html>

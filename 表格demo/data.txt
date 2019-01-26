@@ -1,0 +1,8 @@
+[
+	{"name":"令狐冲","age":24,"forceValue":98,"gender":"男"},
+	{"name":"任盈盈","age":22,"forceValue":80,"gender":"女"},
+	{"name":"岳灵珊","age":21,"forceValue":88,"gender":"女"},
+	{"name":"岳不群","age":58,"forceValue":96,"gender":"男"},
+	{"name":"林平之","age":23,"forceValue":90,"gender":"男"},
+	{"name":"东方不败","age":30,"forceValue":100,"gender":"女"}
+]

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		#mour{
+			position: absolute;
+			width: 100px;
+			height: 100px;
+			left: 100px;
+			top: 50px;
+			background: lightblue;
+			border-radius: 50%;
+			cursor: move;
+		}
+	</style>
+</head>
+<body>
+
+<div id="mour"></div>
+
+<script type="text/javascript">
+	var oMour = document.getElementById("mour");
+
+	oMour.onmousedown = down;
+	function down(e){
+		var that = this;
+		e = e || window.event;
+		this["oldX"] = e.clientX;
+		this["oldY"] = e.clientY;
+		this["oldL"] = this.offsetLeft;
+		this["oldT"] = this.offsetTop;
+
+		this.MOVE = function() {
+			move.call(that);
+		}
+		this.UP = function() {
+			up.call(that);
+		}
+
+		if (this.setCapture) {
+			this.setCapture();
+			this.addEventListener("mousemove",this.MOVE,false);
+			this.addEventListener("mouseup",this.UP,false);
+		}else{
+			document.addEventListener("mousemove",this.MOVE,false);
+			document.addEventListener("mouseup",this.UP,false);
+		}
+		clearInterval(this.fiyTimer);
+		clearInterval(this.dropTimer);
+	}
+
+	function move(e){
+		e = e || window.event;
+		var minL = 0, minT = 0,
+		maxL = (document.documentElement.clientWidth || document.body.clientWidth) - this.offsetWidth,
+		maxT = (document.documentElement.clientHeight || document.body.clientHeight) - this.offsetHeight;
+
+		var newL = e.clientX - this["oldX"] + this["oldL"];
+		var newT = e.clientY - this["oldY"] + this["oldT"];
+		
+		newL = newL <= minL ? minL : ( newL >= maxL ? maxL : newL );
+		newT = newT <= minT ? minT : ( newT >= maxT ? maxT : newT );
+
+		this.style.left = newL + "px";
+		this.style.top = newT + "px";
+
+		if (!this.pre) {
+			this.pre = this.offsetLeft;
+		}else{
+			this.speedFiy = this.offsetLeft - this.pre;
+			this.pre = this.offsetLeft;
+		}
+	}
+
+	function up(e){
+		if (this.releaseCapture) {
+			this.releaseCapture();
+			this.removeEventListener("mousemove",this.MOVE,false);
+			this.removeEventListener("mouseup",this.UP,false);
+		}else{
+			document.removeEventListener("mousemove",this.MOVE,false);
+			document.removeEventListener("mouseup",this.UP,false);
+		}
+
+		
+		fiy.call(this);
+		drop.call(this);
+	}
+
+	function fiy(){
+		var _this = this;
+		_this.fiyTimer = setInterval(function(){
+			_this.speedFiy *= 0.98;
+			var curL = _this.offsetLeft + _this.speedFiy;
+			var minL = 0, maxL = (document.documentElement.clientWidth || document.body.clientWidth) - _this.offsetWidth;
+
+			if (Math.abs(_this.speedFiy) < 0.5) {
+				clearInterval(_this.fiyTimer);
+				return;
+			}
+			if (curL <= minL) {
+				_this.style.left = minL + "px";
+				_this.speedFiy *= -1;
+			}else if(curL >= maxL) {
+				_this.style.left = maxL + "px";
+				_this.speedFiy *= -1;
+			}else{
+				_this.style.left = curL + "px";
+			}
+		},10)
+	}
+
+	function drop(){
+		var _this = this;
+		_this.dragFlag = 0;
+		_this.dropTimer = setInterval(function(){
+			if (_this.dragFlag > 1) {
+				clearInterval(_this.dropTimer);
+				return;
+			}
+
+			_this.preSpeed = !_this.preSpeed? 9.8 : _this.preSpeed + 9.8;
+			_this.preSpeed *= 0.98;
+			var curT = _this.offsetTop + _this.preSpeed;
+			var maxT = (document.documentElement.clientHeight || document.body.clientHeight) - _this.offsetHeight;
+
+			if (curT >= maxT) {
+				_this.style.top = maxT + "px";
+				_this.preSpeed *= -1;
+				_this.dragFlag++;
+			}else{
+				_this.style.top = curT + "px";
+				_this.dragFlag = 0;
+			}
+		},10)
+		
+	}
+
+</script>
+
+</body>
+</html>

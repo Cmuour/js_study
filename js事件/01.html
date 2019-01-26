@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		#mour{
+			width: 100px;
+			height: 100px;
+			margin: 50px auto;
+			background: red;
+		}
+	</style>
+</head>
+<body>
+<div id="mour"></div>
+<script>
+	
+let oMour = document.getElementById("mour");
+oMour.onclick = function(e){
+	//	兼容处理
+	e = e || window.event;
+	e.target = e.target || e.srcElement;
+	e.pageX = e.pageX || (e.clientX + document.documentElement.scrollLeft || document.body.scrollLeft);
+	e.pageY = e.pageY || (e.clientY + document.documentElement.scrollTop || document.body.scrollTop);
+	e.stopPropagation? e.stopPropagation(): e.cancelBubble = true;	// 阻止事件的冒泡传播，IE6~8不兼容，用 e.cancelBubble = true 来代替
+}
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<script>
+		function Person(name,age,gender) {
+			this.name = name;
+			this.age = age;
+			this.gender = gender;
+			this.hello = function(){
+				console.log('222')
+			}
+		}
+
+		Person.prototype.sayHello = function(){
+			console.log(this.name+'和我说了一声hello');
+		}
+
+		let p = new Person('mour',21,'男');
+		let p1 = new Person('mour',21,'男');
+
+		console.log(p.hello == p1.hello)
+
+
+		function foo() {}
+
+		foo.prototype = {
+			constructor:foo
+		}
+
+
+	</script>
+
+</body>
+</html>

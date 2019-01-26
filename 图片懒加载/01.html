@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		div{
+			width: 200px;
+			height: 136px;
+			margin: 20px auto;
+			background: url(./images/cover_img10.jpg) no-repeat;
+		}
+		div img{
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<div id="mour"><img src="#" trueImg="./images/cover_img6.jpg"></div>
+
+	<script type="text/javascript" src="./mymethods.js"></script>
+	<script type="text/javascript">
+		// 第一步 获取元素
+		let oImg = document.querySelector('#mour img');
+		// 第二步 获取图片地址
+		let imgAddress = oImg.getAttribute("trueImg");
+		console.log(imgAddress);
+		~function(){
+			function lazyImg(){
+				let newImg = new Image;
+				newImg.src = imgAddress;
+				newImg.onload = function () {
+					oImg.src = this.src;
+					mytools.css(oImg,{opacity:1,display:"block"});
+					newImg = null;
+				}
+			}
+			oImg.timer = setTimeout(lazyImg,500);
+		}()
+		
+		
+
+
+	</script>
+</body>
+</html>
